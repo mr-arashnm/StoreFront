@@ -1,5 +1,8 @@
+from enum import unique
 import re
 from django.db import models
+from uuid import uuid4
+from django.core.validators import MinValueValidator
 
 class Promotion(models.Model):
     description = models.CharField(max_length=255)
@@ -97,17 +100,23 @@ class Address(models.Model):
     city = models.CharField(max_length=100)
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     
-    
-class cart(models.Model):
+
+class Cart(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid4)
     created_at = models.DateTimeField(auto_now_add=True)
     
 
 class CartItem(models.Model):
-    cart = models.ForeignKey(cart, on_delete=models.CASCADE)
+    cart = models.ForeignKey(Cart, on_delete=models.CASCADE, related_name='items')
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    quantity = models.PositiveIntegerField()
-    
-    
+    quantity = models.PositiveIntegerField(
+        validators=[MinValueValidator(1)]
+    )
+
+    class Meta:
+        unique_together = [['cart', 'product']]
+
+
 class Review(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='reviews')
     name = models.CharField(max_length=255)
