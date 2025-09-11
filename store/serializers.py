@@ -1,8 +1,9 @@
 from decimal import Decimal
 
 from django.db.models import query
-from .models import Product, Collection
+from .models import Product, Collection, Review
 from rest_framework import serializers
+from django.shortcuts import get_object_or_404
 
 class CollectionSerializer(serializers.ModelSerializer):
     class Meta:
@@ -27,3 +28,13 @@ class ProductSerializer(serializers.ModelSerializer):
     def calculate_tax(self, product: Product):
         tax = product.unit_price * Decimal(0.1)  # Assuming a 10% tax rate
         return product.unit_price + tax
+
+
+class ReviewSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Review
+        fields = ['id', 'date', 'name', 'description']
+
+    def create(self, validated_data):
+        product_id = self.context['product_id']
+        return Review.objects.create(product_id=product_id, **validated_data)
