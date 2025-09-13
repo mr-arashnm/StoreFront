@@ -2,5 +2,6 @@
 <project version="4">
   <component name="SqlDialectMappings">
     <file url="file://$PROJECT_DIR$/../../programming language/Code with Mosh - The Ultimate Django Series/Code with Mosh - The Ultimate Django Series Part 2 2021-10/1. Getting Started (7m)/3- Supplementary Materials/Resources/Data/seed.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/../../programming language/Code with Mosh - The Ultimate Django Series/Code with Mosh - The Ultimate Django Series Part 3 2022-3/1. Getting Started (6m)/2- Setting Up the Project/Code/1- Getting Started/Start/storefront3/store/management/commands/seed.sql" dialect="MySQL" />
   </component>
 </project>
