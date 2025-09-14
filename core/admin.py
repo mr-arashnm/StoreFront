@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
+from django.contrib.contenttypes.admin import GenericTabularInline
 from .models import User
 
 # Register your models here.
@@ -12,3 +13,16 @@ class UserAdmin(BaseUserAdmin):
             'fields': ('username', 'password1', 'password2', 'email', 'first_name', 'last_name')}
         ),
     )
+
+
+# class TagInLine(GenericTabularInline):
+#     autocomplete_fields = ['tag']
+#     model = tag
+    
+
+# class CustomProductAdmin(admin.ModelAdmin):
+#     inlines = [TagInLine]
+    
+    
+# admin.site.unregister(Product)
+# admin.site.register(Product, CustomProductAdmin)

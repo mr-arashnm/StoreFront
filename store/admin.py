@@ -23,11 +23,22 @@ class InventoryFilter(admin.SimpleListFilter):
         return queryset
 
 
+class ProductImageInLine(admin.TabularInline):
+    model = models.ProductImage
+    readonly_fields = ['thumbnail']
+
+    def thumbnail(self, instance):
+        if instance.image.name != '':
+            return format_html('<img src="{}" width="100" />', instance.image.url)
+        return ''
+
+
 @admin.register(models.Product)
-class PromotionAdmin(admin.ModelAdmin):
+class ProductAdmin(admin.ModelAdmin):
     list_display = ['title', 'unit_price', 'inventory_status', 'collection_title']
     list_editable = ['unit_price']
     list_filter = ['collection', 'last_update', InventoryFilter]
+    inlines = [ProductImageInLine]
     list_per_page = 10
     search_fields = ['title', 'description']
     list_select_related = ['collection']
